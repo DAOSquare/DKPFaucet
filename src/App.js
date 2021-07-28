@@ -1,18 +1,16 @@
 import {
   Flex,
-  Center,
   Text,
   Button,
   Stack,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Link,
   Box,
   Select,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -28,7 +26,7 @@ import {
 } from "@usedapp/core";
 import { Interface } from "@ethersproject/abi";
 import { Contract } from "@ethersproject/contracts";
-import { BigNumber } from "ethers";
+import { BigNumber, utils } from "ethers";
 
 import { abi } from "./abi";
 
@@ -112,16 +110,14 @@ function App() {
   const { account, chainId } = useEthers();
   const [recipientAddress, setRecipientAddress] = useState("");
   const [selectToken, setSelectToken] = useState("");
-  const mintAmount = 30; // dkp1
-  // dkp 2: 5000
-  const amounts = { JTT: 3, ATT: 5 };
+  const amounts = { JTT: 120, ATT: 5000 };
 
   console.log("chain id", chainId);
   console.log("chain name", getChainName(chainId));
   const tokenInterface = new Interface(abi);
 
-  const JTTAddress = "0x956b85b551964D1767Cf7E64838cF33e7A52E6cB";
-  const ATTAddress = "0x1AC46F3af786f6193F2bB5E6E8F8393C1620a7ac";
+  const JTTAddress = "0x10a1F4C57F6025187c82223BD4f609eF398F11f4";
+  const ATTAddress = "0xD12a6c431fCC4A7069254F62a44CB69295DdB0d1";
 
   const JTTContract = new Contract(JTTAddress, tokenInterface);
   const ATTContract = new Contract(ATTAddress, tokenInterface);
@@ -135,6 +131,8 @@ function App() {
     ATTContract,
     "mint"
   );
+
+  const toast = useToast();
 
   useEffect(() => {
     console.log("token Amount:", amounts[selectToken]);
@@ -195,21 +193,28 @@ function App() {
           {account ? (
             <ShadowButton
               onClick={async () => {
+                if (chainId !== 100) {
+                  toast({
+                    title: "Plz switch to xdai",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                  return;
+                }
                 const address =
                   recipientAddress === "" ? account : recipientAddress;
                 if (selectToken === "JTT") {
                   console.log("mint JTT");
-                  JTTSend(
-                    address,
-                    BigNumber.from(`${amounts[selectToken] * 1e18}`)
-                  );
+                  JTTSend(address, utils.parseEther(`${amounts[selectToken]}`));
                 }
 
                 if (selectToken === "ATT") {
                   console.log("mint ATT");
                   ATTSend(
                     address,
-                    BigNumber.from(`${amounts[selectToken] * 1e18}`)
+                    // BigNumber.from(`${amounts[selectToken] * 1e18}`)
+                    utils.parseEther(`${amounts[selectToken]}`)
                   );
                 }
               }}

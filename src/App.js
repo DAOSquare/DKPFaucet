@@ -233,10 +233,10 @@ function App() {
         <Text mb="6">
           {account ? `Your address: ${account}` : "Please connect"}
         </Text>
-        <Link href="https://blockscout.com/xdai/mainnet/address/0x956b85b551964D1767Cf7E64838cF33e7A52E6cB/transactions">
+        <Link href={`https://blockscout.com/xdai/mainnet/address/${JTTAddress}/transactions`}>
           JTT Token Address: 0x956b85b551964D1767Cf7E64838cF33e7A52E6cB
         </Link>
-        <Link href="https://blockscout.com/xdai/mainnet/address/0x1AC46F3af786f6193F2bB5E6E8F8393C1620a7ac/transactions">
+        <Link href={`https://blockscout.com/xdai/mainnet/address/${ATTAddress}/transactions`}>
           ATT Token Address: 0x1AC46F3af786f6193F2bB5E6E8F8393C1620a7ac
         </Link>
       </Flex>

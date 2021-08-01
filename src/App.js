@@ -116,8 +116,8 @@ function App() {
   console.log("chain name", getChainName(chainId));
   const tokenInterface = new Interface(abi);
 
-  const JTTAddress = "0x10a1F4C57F6025187c82223BD4f609eF398F11f4";
-  const ATTAddress = "0xD12a6c431fCC4A7069254F62a44CB69295DdB0d1";
+  const JTTAddress = "0xEfFb69b4B09C494589D3086b1B1328F558b7962A";
+  const ATTAddress = "0xe62ED48eab1d2F19208841F7F6292BC3bf7AaeE7";
 
   const JTTContract = new Contract(JTTAddress, tokenInterface);
   const ATTContract = new Contract(ATTAddress, tokenInterface);

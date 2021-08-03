@@ -111,6 +111,7 @@ function App() {
   const [recipientAddress, setRecipientAddress] = useState("");
   const [selectToken, setSelectToken] = useState("");
   const amounts = { JTT: 120, ATT: 5000 };
+  const mintInterval = { JTT: "1", ATT: "7" };
 
   console.log("chain id", chainId);
   console.log("chain name", getChainName(chainId));
@@ -185,7 +186,7 @@ function App() {
             <Text>
               {selectToken === ""
                 ? null
-                : `You can mint ${amounts[selectToken]}  Token 7 days`}
+                : `You can mint ${amounts[selectToken]}  Token ${mintInterval[selectToken]} days`}
             </Text>
           </FormControl>
         </Stack>
@@ -233,10 +234,14 @@ function App() {
         <Text mb="6">
           {account ? `Your address: ${account}` : "Please connect"}
         </Text>
-        <Link href={`https://blockscout.com/xdai/mainnet/address/${JTTAddress}/transactions`}>
+        <Link
+          href={`https://blockscout.com/xdai/mainnet/address/${JTTAddress}/transactions`}
+        >
           JTT Token Address: {JTTAddress}
         </Link>
-        <Link href={`https://blockscout.com/xdai/mainnet/address/${ATTAddress}/transactions`}>
+        <Link
+          href={`https://blockscout.com/xdai/mainnet/address/${ATTAddress}/transactions`}
+        >
           ATT Token Address: {ATTAddress}
         </Link>
       </Flex>

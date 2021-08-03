@@ -186,7 +186,7 @@ function App() {
             <Text>
               {selectToken === ""
                 ? null
-                : `You can mint ${amounts[selectToken]}  Token ${mintInterval[selectToken]} days`}
+                : `You can mint ${amounts[selectToken]}  Token ${mintInterval[selectToken]} ${parseInt(mintInterval[selectToken]) > 1 ? "days" : "day"}`}
             </Text>
           </FormControl>
         </Stack>

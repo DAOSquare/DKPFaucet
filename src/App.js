@@ -4,6 +4,7 @@ import {
   Button,
   Stack,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Link,
@@ -113,6 +114,8 @@ function App() {
   const amounts = { JTT: 120, ATT: 10000 };
   const mintInterval = { JTT: "1", ATT: "7" };
 
+  const [mintAmount, setMintAmount] = useState("0");
+
   console.log("chain id", chainId);
   console.log("chain name", getChainName(chainId));
   const tokenInterface = new Interface(abi);
@@ -183,12 +186,34 @@ function App() {
 
           <FormControl>
             <FormLabel>Mint Amount</FormLabel>
+            <Input
+              type="text"
+              defaultValue="0"
+              onChange={(e) => setMintAmount(e.target.value)}
+            />
+            <FormHelperText>
+              {selectToken === ""
+                ? null
+                : `You can mint ${amounts[selectToken]}  Token ${
+                    mintInterval[selectToken]
+                  } ${
+                    parseInt(mintInterval[selectToken]) > 1 ? "days" : "day"
+                  }`}
+            </FormHelperText>
+          </FormControl>
+
+          {/* <FormControl>
+            <FormLabel>Mint Amount</FormLabel>
             <Text>
               {selectToken === ""
                 ? null
-                : `You can mint ${amounts[selectToken]}  Token ${mintInterval[selectToken]} ${parseInt(mintInterval[selectToken]) > 1 ? "days" : "day"}`}
+                : `You can mint ${amounts[selectToken]}  Token ${
+                    mintInterval[selectToken]
+                  } ${
+                    parseInt(mintInterval[selectToken]) > 1 ? "days" : "day"
+                  }`}
             </Text>
-          </FormControl>
+          </FormControl> */}
         </Stack>
         <Box mb="6">
           {account ? (
@@ -206,16 +231,17 @@ function App() {
                 const address =
                   recipientAddress === "" ? account : recipientAddress;
                 if (selectToken === "JTT") {
-                  console.log("mint JTT");
-                  JTTSend(address, utils.parseEther(`${amounts[selectToken]}`));
+                  console.log(`mint ${mintAmount} JTT`);
+                  // JTTSend(address, utils.parseEther(`${amounts[selectToken]}`));
+                  JTTSend(address, utils.parseEther(`${mintAmount}`));
                 }
 
                 if (selectToken === "ATT") {
-                  console.log("mint ATT");
+                  console.log(`mint ${mintAmount} ATT`);
                   ATTSend(
                     address,
                     // BigNumber.from(`${amounts[selectToken] * 1e18}`)
-                    utils.parseEther(`${amounts[selectToken]}`)
+                    utils.parseEther(`${mintAmount}`)
                   );
                 }
               }}

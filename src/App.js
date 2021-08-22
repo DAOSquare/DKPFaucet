@@ -111,7 +111,7 @@ function App() {
   const { account, chainId } = useEthers();
   const [recipientAddress, setRecipientAddress] = useState("");
   const [selectToken, setSelectToken] = useState("");
-  const amounts = { JTT: 120, ATT: 15000 };
+  const amounts = { JTT: 120, ATT: 20000 };
   const mintInterval = { JTT: "1", ATT: "7" };
 
   const [mintAmount, setMintAmount] = useState("0");
